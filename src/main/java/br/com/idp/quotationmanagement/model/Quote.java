@@ -1,17 +1,28 @@
 package br.com.idp.quotationmanagement.model;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Quote {
 
-	private LocalDate date;
-	private BigDecimal value;
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
-	public Quote(LocalDate date, BigDecimal value) {
-		this.date = date;
-		this.value = value;
-	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "stock_id")
+	private Stock stock;
+	
+	private LocalDate date;
+	private Double value;
+	
 
 	public LocalDate getDate() {
 		return date;
@@ -21,14 +32,23 @@ public class Quote {
 		this.date = date;
 	}
 
-	public BigDecimal getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(BigDecimal value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 	
+	public Long getId() {
+		return id;
+	}
 	
+	public Stock getStock() {
+		return stock;
+	}
 	
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
 }
