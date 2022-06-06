@@ -13,23 +13,33 @@ import javax.persistence.OneToMany;
 @Entity
 public class Stock {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	private String stockName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	private String stockId;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "stock")
 	private List<Quote> quotes;
 	
+	public Stock() {	
+	}
+	
+	public Stock(String stockId, List<Quote> quotes) {
+		this.stockId = stockId;
+		this.quotes = quotes;
+	}
+
 	public Long getId() {
 		return id;
 	}
 	
-	public String getStockName() {
-		return stockName;
+	public String getStockId() {
+		return stockId;
 	}
 
-	public void setStockId(String stockName) {
-		this.stockName = stockName;
+	public void setStockId(String stockId) {
+		this.stockId = stockId;
 	}
 
 	public List<Quote> getQuotes() {

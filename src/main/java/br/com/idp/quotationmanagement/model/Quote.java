@@ -23,6 +23,15 @@ public class Quote {
 	private LocalDate date;
 	private Double value;
 	
+	public Quote() {
+	}
+	
+
+	public Quote(Stock stock, LocalDate date, Double value) {
+		this.stock = stock;
+		this.date = date;
+		this.value = value;
+	}
 
 	public LocalDate getDate() {
 		return date;
