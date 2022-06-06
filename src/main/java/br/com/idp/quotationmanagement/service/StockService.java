@@ -15,6 +15,8 @@ import br.com.idp.quotationmanagement.model.Stock;
 import br.com.idp.quotationmanagement.repository.QuoteRepository;
 import br.com.idp.quotationmanagement.repository.StockRepository;
 import br.com.idp.quotationmanagement.service.client.WebClientStockManagerGet;
+import br.com.idp.quotationmanagement.service.client.WebClientStockManagerPost;
+import br.com.idp.quotationmanagement.service.client.form.StockClientForm;
 
 @Service
 public class StockService {
@@ -27,6 +29,9 @@ public class StockService {
 
 	@Autowired
 	private WebClientStockManagerGet webClientStockManagerGet;
+	
+	@Autowired
+	private WebClientStockManagerPost webClientStockManagerPost;
 
 	public List<StockDto> listStocks(String stockId) {
 		if (stockId == null) {
@@ -49,6 +54,7 @@ public class StockService {
 				return ResponseEntity.created(uri).body(new StockDto(stock));
 			}		
 		}
+		webClientStockManagerPost.createStockAtServer(new StockClientForm(stockForm.getStockId(), "description test"));
 		return ResponseEntity.badRequest().build();
 	}
 
