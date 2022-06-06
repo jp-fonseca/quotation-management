@@ -2,24 +2,26 @@ package br.com.idp.quotationmanagement.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Stock {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "UUID")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	private UUID id;
 	
 	private String stockId;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "stock")
+	@OneToMany(mappedBy = "stock")
 	private List<Quote> quotes;
 	
 	public Stock() {	
@@ -30,7 +32,7 @@ public class Stock {
 		this.quotes = quotes;
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 	

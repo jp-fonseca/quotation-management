@@ -29,6 +29,7 @@ public class StockController {
 	@Autowired
 	private StockService stockService;
 
+	
 	@GetMapping
 	@Cacheable(value = "listedStocks")
 	public List<StockDto> list(String stockId) {

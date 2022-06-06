@@ -62,5 +62,4 @@ public class StockForm {
 		return quoteList;
 	}
 	
-	
 }
