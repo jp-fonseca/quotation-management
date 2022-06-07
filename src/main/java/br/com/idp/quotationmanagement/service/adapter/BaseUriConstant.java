@@ -1,4 +1,4 @@
-package br.com.idp.quotationmanagement.service.client;
+package br.com.idp.quotationmanagement.service.adapter;
 
 public class BaseUriConstant {
 

@@ -1,6 +1,7 @@
 package br.com.idp.quotationmanagement.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,13 @@ public class StockDto {
 	
 	public static List<StockDto> convert(List<Stock> stocks) {
 		return stocks.stream().map(StockDto::new).collect(Collectors.toList());
+	}
+
+	public static List<StockDto> convertOne(Stock stock) {
+		List<StockDto> list = new ArrayList<StockDto>();
+		StockDto stockDto = new StockDto(stock);
+		list.add(stockDto);
+		return list;
 	}
 	
 	

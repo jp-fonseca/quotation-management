@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import br.com.idp.quotationmanagement.model.Quote;
 import br.com.idp.quotationmanagement.model.Stock;
 import br.com.idp.quotationmanagement.repository.QuoteRepository;
+import br.com.idp.quotationmanagement.repository.StockRepository;
 
 public class StockForm {
 
@@ -47,6 +48,15 @@ public class StockForm {
 		return stock;
 	}
 
+	public Stock convertExistent(StockForm stockForm, QuoteRepository quoteRepository, StockRepository stockRepository) {
+		Stock stock = stockRepository.findByStockId(stockForm.getStockId());
+		List<Quote> list = convertToQuoteList(stock, quoteRepository);
+		stock.getQuotes().addAll(list);
+		return stock;
+		
+	}
+	
+	
 	private List<Quote> convertToQuoteList(Stock stock, QuoteRepository quoteRepository) {
 		List<Quote> quoteList = new ArrayList<>();
 		
