@@ -34,7 +34,8 @@ public class StockService {
 	@Autowired
 	private WebClientStockManagerAdapter webClientStockManagerAdapter;
 
-	
+	private List<StockDtoClient> cachedStocks = new ArrayList<>();
+
 	@Cacheable(value = "listedStocks")
 	public List<StockDto> listStocks(String stockId) {
 		if (stockId == null) {
@@ -50,15 +51,15 @@ public class StockService {
 		}
 	}
 
-
-	@CacheEvict(value = "registeredStocks", allEntries = true)
+	@CacheEvict(value = "listedStocks", allEntries = true)
 	public ResponseEntity<StockDto> registerStocks(StockForm stockForm, UriComponentsBuilder uriBuilder) {
 
-		List<StockDtoClient> stockCheck = extracted();
-
-		for (StockDtoClient stockDtoClient : stockCheck) {
-			int comparing = stockDtoClient.getId().compareToIgnoreCase(stockForm.getStockId());
-			
+		if(cachedStocks.isEmpty()) {
+			populateCacheFromStockManager();
+		}
+		
+			int comparing = compareStockToRegisterWithCached(stockForm, cachedStocks);
+			System.out.println(comparing);
 			if (comparing == 0) {
 				if (stockRepository.findByStockId(stockForm.getStockId()) == null) {
 					Stock stock = stockForm.convert(stockForm, quoteRepository);
@@ -73,16 +74,36 @@ public class StockService {
 					return ResponseEntity.created(uri).body(new StockDto(stock));
 				}
 			}
-		}
-		//webClientStockManagerAdapter.createStockAtServer(new StockClientForm(stockForm.getStockId(), "test "+ stockForm.getStockId().subSequence(0, 4)));
+	return ResponseEntity.badRequest().build();
+}
+
+	private int compareStockToRegisterWithCached(StockForm stockForm, List<StockDtoClient> cachedStocks) {
+		int comparing = 0;		
+		for (StockDtoClient stockDtoClient : cachedStocks) {
+			comparing = stockDtoClient.getId().compareToIgnoreCase(stockForm.getStockId());
+				
+			if(comparing == 0) {
+					return 0;
+				}	
+			}
+		return comparing;
 		
-		 return ResponseEntity.badRequest().build();
+		}
+
+	private void populateCacheFromStockManager() {
+			this.cachedStocks = webClientStockManagerAdapter.listDtoFromClient();
 	}
 
-	@Cacheable(value = "registeredStocks")
-	private List<StockDtoClient> extracted() {
-		List<StockDtoClient> stockCheck = webClientStockManagerAdapter.listDtoFromClient();
-		return stockCheck;
+	public void setCachedStocks(List<StockDtoClient> cachedStocks2) {
+		this.cachedStocks = cachedStocks2;
+	}
+	
+	public List<StockDtoClient> getCachedStocks() {
+		return cachedStocks;
+	}
+	
+	public void clearCache() {
+		this.cachedStocks.clear();
 	}
 
 }
