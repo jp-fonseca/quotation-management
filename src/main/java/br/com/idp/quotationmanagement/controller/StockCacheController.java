@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.idp.quotationmanagement.service.StockService;
+import br.com.idp.quotationmanagement.service.StockQuoteService;
 
 @RestController
 @RequestMapping("/stockcache")
 public class StockCacheController {
 	
 	@Autowired
-	private StockService stockservice;
+	private StockQuoteService stockservice;
 	
 	@DeleteMapping
 	public void stockCache(){

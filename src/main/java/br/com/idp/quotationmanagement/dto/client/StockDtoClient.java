@@ -1,10 +1,20 @@
 package br.com.idp.quotationmanagement.dto.client;
 
+import br.com.idp.quotationmanagement.service.client.form.StockClientForm;
+
 public class StockDtoClient {
 
 	private String id;
 	private String description;
 	
+	public StockDtoClient() {
+		
+	}
+	
+	public StockDtoClient(StockClientForm stockClientForm) {
+		this.id = stockClientForm.getId();
+		this.description = stockClientForm.getDescription();
+	}
 	public String getId() {
 		return id;
 	}

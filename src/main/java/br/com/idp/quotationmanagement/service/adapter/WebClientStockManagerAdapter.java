@@ -32,29 +32,29 @@ public class WebClientStockManagerAdapter {
 		return stocks;
 	}
 
-	public void createStockAtServer(StockClientForm stockClientForm) {
+	public ResponseEntity<StockDtoClient> createStockAtServer(StockClientForm stockClientForm) {
 
 		StockDtoClient stock = new StockDtoClient();
 		stock.setId(stockClientForm.getId());
 		stock.setDescription(stockClientForm.getDescription());
 
-		WebClient.create(BaseUriConstant.BASE_URI).post().uri("/stock").bodyValue(stock)
-				.retrieve().bodyToMono(StockDtoClient.class).block();
+		ResponseEntity<Void> responseEntity = WebClient.create(BaseUriConstant.BASE_URI).post().uri("/stock").bodyValue(stock)
+				.retrieve().toBodilessEntity().block();
+		
+		HttpStatus statusCode = responseEntity.getStatusCode();
+		return ResponseEntity.status(statusCode).body(stock);
+		
 	}
 	
 	@PostConstruct
 	public void registerItselfForNotification() {
-		System.out.println("O METODO DE REGISTRO NO NOTIFICATION FOI INICIALIZADO!");
 		NotificationForm nf = new NotificationForm();
 		nf.setHost("localhost");
 		nf.setPort(8081);
 		
-		ResponseEntity<Void> responseEntity = WebClient.create(BaseUriConstant.BASE_URI).
+		WebClient.create(BaseUriConstant.BASE_URI).
 		post().
 		uri("/notification")
 		.bodyValue(nf).retrieve().toBodilessEntity().block();
-		
-		HttpStatus statusCode = responseEntity.getStatusCode();
-		System.out.println(statusCode);
 	}
 }

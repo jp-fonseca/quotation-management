@@ -1,8 +1,14 @@
 package br.com.idp.quotationmanagement.service.client.form;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class StockClientForm {
 
+	@NotNull
+	@NotEmpty
 	private String id;
+
 	private String description;
 	
 	public StockClientForm(String stockId, String description) {
