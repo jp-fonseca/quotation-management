@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import br.com.idp.quotationmanagement.model.Stock;
 
 public class StockDto {
 
-	private UUID id;
+	private String id;
 	private String stockId;
 	private Map<LocalDate, Double> quotes = new HashMap<>();
 	
@@ -25,7 +24,7 @@ public class StockDto {
 		stock.getQuotes().forEach(q -> this.quotes.put(q.getDate(), q.getValue()));;
 	}
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 

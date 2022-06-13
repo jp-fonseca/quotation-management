@@ -2,7 +2,6 @@ package br.com.idp.quotationmanagement.model;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,7 @@ public class Stock {
 	@Id
 	@GeneratedValue(generator = "UUID")
 	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-	private UUID id;
+	private String id;
 	
 	private String stockId;
 	
@@ -32,7 +31,7 @@ public class Stock {
 		this.quotes = quotes;
 	}
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 	
