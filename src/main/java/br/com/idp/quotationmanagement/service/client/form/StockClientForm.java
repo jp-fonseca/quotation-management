@@ -11,6 +11,9 @@ public class StockClientForm {
 
 	private String description;
 	
+	public StockClientForm() {
+	}
+	
 	public StockClientForm(String stockId, String description) {
 		this.id = stockId;
 		this.description = description;
