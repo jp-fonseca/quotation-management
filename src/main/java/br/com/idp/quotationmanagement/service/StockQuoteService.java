@@ -80,11 +80,10 @@ public class StockQuoteService {
 			}
 }
 
-	private int compareStockToRegisterWithCached(StockForm stockForm, List<StockDtoClient> cachedStocks) {
+	public int compareStockToRegisterWithCached(StockForm stockForm, List<StockDtoClient> cachedStocks) {
 		int comparing = 0;		
 		for (StockDtoClient stockDtoClient : cachedStocks) {
-			comparing = stockDtoClient.getId().compareToIgnoreCase(stockForm.getStockId());
-				
+			comparing = stockDtoClient.getId().compareToIgnoreCase(stockForm.getStockId());	
 			if(comparing == 0) {
 					return 0;
 				}	
@@ -93,7 +92,7 @@ public class StockQuoteService {
 		
 		}
 
-	private void populateCacheFromStockManager() {
+	public void populateCacheFromStockManager() {
 			this.cachedStocks = webClientStockManagerAdapter.listDtoFromClient();
 	}
 
