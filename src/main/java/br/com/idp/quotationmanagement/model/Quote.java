@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Positive;
 
 @Entity
 public class Quote {
@@ -21,6 +22,8 @@ public class Quote {
 	private Stock stock;
 	
 	private LocalDate date;
+	
+	@Positive(message = "Value cannot be zero or inferior")
 	private Double value;
 	
 	public Quote() {
