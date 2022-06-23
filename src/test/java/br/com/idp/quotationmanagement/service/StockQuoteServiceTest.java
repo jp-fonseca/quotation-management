@@ -3,7 +3,6 @@ package br.com.idp.quotationmanagement.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import br.com.idp.quotationmanagement.controller.StockCacheController;
 import br.com.idp.quotationmanagement.controller.form.StockForm;
 import br.com.idp.quotationmanagement.dto.client.StockDtoClient;
 import br.com.idp.quotationmanagement.service.adapter.WebClientStockManagerAdapter;

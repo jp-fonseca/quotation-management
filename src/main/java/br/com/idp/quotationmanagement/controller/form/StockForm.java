@@ -9,6 +9,9 @@ import java.util.Map;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import br.com.idp.quotationmanagement.model.Quote;
 import br.com.idp.quotationmanagement.model.Stock;
 import br.com.idp.quotationmanagement.repository.QuoteRepository;
@@ -64,6 +67,11 @@ public class StockForm {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate date = LocalDate.parse(q.getKey(), dtf);
 			Double value = Double.parseDouble(q.getValue());
+			for(Quote qt : stock.getQuotes()) {
+				if(qt.getDate().equals(date)) {
+					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Date already registered.");
+				}
+			}
 			Quote uniqueQuote = new Quote(stock, date, value);
 			quoteList.add(uniqueQuote);
 			quoteRepository.save(uniqueQuote);
