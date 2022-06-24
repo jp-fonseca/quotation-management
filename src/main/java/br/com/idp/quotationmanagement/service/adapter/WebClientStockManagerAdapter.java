@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,17 @@ import reactor.core.publisher.Flux;
 @Service
 public class WebClientStockManagerAdapter {
 
+	@Value("${stock.manager.url}")
+	public static String stockManagerURL;
+	
+	@Value("${server.host}")
+	private String host;
 	
 	public List<StockDtoClient> listDtoFromClient() {
 				
 		List<StockDtoClient> stocks = new ArrayList<StockDtoClient>();
 		
-		Flux<StockDtoClient> fluxStock = WebClient.create(BaseUriConstant.BASE_URI).get().uri("/stock").retrieve()
+		Flux<StockDtoClient> fluxStock = WebClient.create(stockManagerURL).get().uri("/stock").retrieve()
 				.bodyToFlux(StockDtoClient.class);
 
 		fluxStock.subscribe(s -> stocks.add(s));
@@ -39,7 +45,7 @@ public class WebClientStockManagerAdapter {
 		stock.setDescription(stockClientForm.getDescription());
 
 		ResponseEntity<Void> responseEntity = 
-				WebClient.create(BaseUriConstant.BASE_URI)
+				WebClient.create(stockManagerURL)
 				.post()
 				.uri("/stock")
 				.bodyValue(stock)
@@ -52,10 +58,10 @@ public class WebClientStockManagerAdapter {
 	@PostConstruct
 	public void registerItselfForNotification() {
 		NotificationForm nf = new NotificationForm();
-		nf.setHost("localhost");
+		nf.setHost(host);
 		nf.setPort(8081);
 		
-		WebClient.create(BaseUriConstant.BASE_URI).
+		WebClient.create(stockManagerURL).
 		post().
 		uri("/notification")
 		.bodyValue(nf).retrieve().toBodilessEntity().block();

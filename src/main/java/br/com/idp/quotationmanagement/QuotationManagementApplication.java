@@ -15,6 +15,6 @@ public class QuotationManagementApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(QuotationManagementApplication.class, args);
-	}
-
+	}	
+	
 }
