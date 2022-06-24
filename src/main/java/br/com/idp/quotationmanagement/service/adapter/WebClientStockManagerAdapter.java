@@ -38,9 +38,12 @@ public class WebClientStockManagerAdapter {
 		stock.setId(stockClientForm.getId());
 		stock.setDescription(stockClientForm.getDescription());
 
-		ResponseEntity<Void> responseEntity = WebClient.create(BaseUriConstant.BASE_URI).post().uri("/stock").bodyValue(stock)
+		ResponseEntity<Void> responseEntity = 
+				WebClient.create(BaseUriConstant.BASE_URI)
+				.post()
+				.uri("/stock")
+				.bodyValue(stock)
 				.retrieve().toBodilessEntity().block();
-		
 		HttpStatus statusCode = responseEntity.getStatusCode();
 		return ResponseEntity.status(statusCode).body(stock);
 		
@@ -57,4 +60,5 @@ public class WebClientStockManagerAdapter {
 		uri("/notification")
 		.bodyValue(nf).retrieve().toBodilessEntity().block();
 	}
+	
 }

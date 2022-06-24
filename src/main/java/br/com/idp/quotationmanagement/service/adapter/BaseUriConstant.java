@@ -1,7 +1,12 @@
 package br.com.idp.quotationmanagement.service.adapter;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class BaseUriConstant {
 
-	public static final String BASE_URI = "http://localhost:8080";
+	@Value("${stock.manager.url}")
+	private static String stockManagerURL;
+	
+	public static final String BASE_URI = stockManagerURL;
 	
 }
