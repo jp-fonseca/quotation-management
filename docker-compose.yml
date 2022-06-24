@@ -12,6 +12,8 @@ services:
       - MYSQL_DATABASE=bootdb
     networks:
       - quotation-management-network
+    volumes:
+      - /var/lib/mysql
 
     
   stockmanager:
@@ -21,6 +23,8 @@ services:
       - 8080:8080
     networks:
       - quotation-management-network
+    depends_on:
+      - mysql
 
   quotationmanagement:
     build:
@@ -34,7 +38,6 @@ services:
       - PORT=8081
       - MYSQL_CONTAINER=mysql
       - STOCK_MANAGER_CONTAINER=stockmanager
-      - SPRING_PROFILES_ACTIVE=prod
     networks:
       - quotation-management-network
     depends_on:

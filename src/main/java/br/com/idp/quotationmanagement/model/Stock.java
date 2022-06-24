@@ -1,5 +1,6 @@
 package br.com.idp.quotationmanagement.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,7 +22,7 @@ public class Stock {
 	private String stockId;
 	
 	@OneToMany(mappedBy = "stock")
-	private List<Quote> quotes;
+	private List<Quote> quotes = new ArrayList<Quote>(0);
 	
 	public Stock() {	
 	}
